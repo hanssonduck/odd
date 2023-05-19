@@ -1,14 +1,12 @@
-//
-//  OddApp.swift
-//  Odd
-//
-//  Created by Isak Hansson on 2023-05-19.
-//
-
+import Shared
 import SwiftUI
 
 @main
 struct OddApp: App {
+    init() {
+        SharedModuleKt.doInitKoin()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

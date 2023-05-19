@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.devtools.ksp")
     kotlin("android")
 }
 
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "duck.hansson.odd.android"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -65,6 +66,9 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material.you)
+
+    implementation(libs.destinations.core)
+    ksp(libs.destinations.ksp)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
