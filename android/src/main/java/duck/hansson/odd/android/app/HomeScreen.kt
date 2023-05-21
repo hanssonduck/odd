@@ -24,7 +24,7 @@ fun HomeScreen(viewModel: AppViewModel) {
             contentPadding = it
         ) {
             item {
-                ErrorMessage(text = "Ingen sökning har gjorts")
+                ErrorMessage(text = "Ingen sökning har gjorts.")
             }
         }
     }

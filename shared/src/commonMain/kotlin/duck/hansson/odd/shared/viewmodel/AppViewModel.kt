@@ -80,11 +80,19 @@ class AppViewModel(
 }
 
 sealed class AppState {
+    abstract val key: String
     abstract val query: String
 
-    data class Waiting(override val query: String = "") : AppState()
-    data class Empty(override val query: String) : AppState()
+    data class Waiting(
+        override val key: String = "waiting",
+        override val query: String = ""
+    ) : AppState()
+    data class Empty(
+        override val key: String = "empty",
+        override val query: String
+    ) : AppState()
     data class Data(
+        override val key: String = "data",
         override val query: String,
         val results: PersistentList<SearchResult>
     ) : AppState()

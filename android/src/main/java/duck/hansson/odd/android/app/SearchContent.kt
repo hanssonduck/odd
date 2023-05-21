@@ -1,8 +1,9 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package duck.hansson.odd.android.app
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -50,20 +51,19 @@ fun SearchContent(
     modifier: Modifier = Modifier
 ) {
     AnimatedContent(
-        targetState = state,
+        targetState = state.key,
         modifier = modifier
             .fillMaxSize()
             .systemBarsPadding()
             .background(color = MaterialTheme.colorScheme.background),
-        contentKey = { it.javaClass.name },
         label = "SearchContent"
     ) {
         LazyColumn(
             contentPadding = PaddingValues(all = 16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 16.dp)
         ) {
-            when (it) {
-                is AppState.Data -> items(it.results) { result ->
+            when {
+                it == "data" && state is AppState.Data -> items(state.results) { result ->
                     ResultItem(
                         contactActions = viewModel.contactActions,
                         animal = result.animal,
@@ -71,13 +71,13 @@ fun SearchContent(
                     )
                 }
 
-                is AppState.Empty -> item {
+                it == "empty" && state is AppState.Empty -> item {
                     ErrorMessage(
                         text = "Inga katter hittades för denna sökning. Prova ett annat chipnummer eller tatuering."
                     )
                 }
 
-                is AppState.Waiting -> item {
+                it == "waiting" && state is AppState.Waiting -> item {
                     ErrorMessage(text = "Ingen sökning har gjorts.",)
                 }
             }
