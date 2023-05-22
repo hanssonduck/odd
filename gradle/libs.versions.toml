@@ -16,6 +16,7 @@ compose-bom = "2023.05.01"
 material-you = "1.2.0-alpha01"
 
 destinations = "1.8.41-beta"
+browser = "1.5.0"
 
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
@@ -48,10 +49,13 @@ compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = 
 ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+animation = { group = "androidx.compose.animation", name = "animation", version = "1.5.0-alpha04" }
+material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 material-you = { group = "androidx.compose.material3", name = "material3", version.ref = "material-you" }
 
 destinations-core = { group = "io.github.raamcosta.compose-destinations", name = "animations-core", version.ref = "destinations" }
 destinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "destinations" }
+browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }

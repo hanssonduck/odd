@@ -1,10 +1,3 @@
-//
-//  SearchContent.swift
-//  Odd
-//
-//  Created by Isak Hansson on 2023-05-21.
-//
-
 import Shared
 import SwiftUI
 
@@ -12,22 +5,25 @@ struct SearchContent: View {
     var state: AppState.Data
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .trailing, spacing: 20) {
-                ForEach(state.results, id: \.animal.id) { result in
-                    ResultItem(animal: result.animal, owner: result.owner)
-                }
-            }
-            .padding()
+        ForEach(state.results, id: \.animal.id) { result in
+            ResultItem(animal: result.animal, owner: result.owner)
+                .listRowInsets(.init(top: 0, leading: 0, bottom: 20, trailing: 0))
+                .listRowSeparator(.hidden)
+                .listRowBackground(
+                    RoundedRectangle(cornerRadius: 10)
+                        .background(Color(.clear))
+                        .foregroundColor(Color(.systemBackground))
+                        .padding(.bottom)
+                )
         }
     }
 }
 
 struct ResultItem: View {
-    @State private var showContactSheet = false
-
     let animal: Animal
     let owner: Owner
+
+    @State private var showContactSheet = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -69,7 +65,7 @@ struct ResultItem: View {
                 Text(overview)
                     .padding()
                     .frame(maxWidth: UIScreen.main.bounds.width, alignment: .leading)
-                    .background(Color(.systemBackground))
+                    .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
             }
 
@@ -84,9 +80,7 @@ struct ResultItem: View {
                 .controlSize(.large)
             }
         }
-        .padding(20)
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(10)
+        .padding()
         .sheet(isPresented: $showContactSheet) {
             ContactOwner(owner: owner)
         }

@@ -8,11 +8,11 @@ private struct InnerHeightPreferenceKey: PreferenceKey {
 }
 
 struct ContactOwner: View {
-    @EnvironmentViewModel var viewModel: AppViewModel
     let owner: Owner
 
-    @Environment(\.dismiss)
-    private var dismiss
+    @EnvironmentViewModel var viewModel: AppViewModel
+    @Environment(\.dismiss) private var dismiss
+
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
@@ -29,6 +29,7 @@ struct ContactOwner: View {
                     Text("\(location.address)")
                     Text("\(location.zip) \(location.city)")
                 }
+                .padding(.vertical)
             }
 
             if let phoneNumber = owner.phoneNumber {
@@ -74,5 +75,10 @@ struct ContactOwner: View {
         .onPreferenceChange(InnerHeightPreferenceKey.self) { sheetHeight = $0 }
         .presentationDetents([.height(sheetHeight)])
         .presentationDragIndicator(.visible)
+        .onChange(of: viewModel.state) { state in
+            if !(state is AppState.Data) {
+                dismiss()
+            }
+        }
     }
 }

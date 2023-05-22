@@ -24,7 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import duck.hansson.odd.shared.data.Owner
 import duck.hansson.odd.shared.module.ContactActions
-import java.util.Locale
 
 @Composable
 fun ContactOwner(
@@ -61,7 +60,7 @@ fun ContactOwner(
                 owner.phoneNumber?.let {
                     val formatted = PhoneNumberUtils.formatNumber(
                         it,
-                        Locale.getDefault().country
+                        "SE"
                     )
                     ContactAction(
                         label = "Ring $formatted",
@@ -88,7 +87,7 @@ fun ContactOwner(
 }
 
 @Composable
-fun ContactAction(
+private fun ContactAction(
     label: String,
     onAction: () -> Unit,
     modifier: Modifier = Modifier
@@ -96,14 +95,14 @@ fun ContactAction(
     Button(
         onClick = onAction,
         modifier = modifier.fillMaxWidth(),
-        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
         border = CardDefaults.outlinedCardBorder(),
         contentPadding = PaddingValues(all = 16.dp)
     ) {
         Text(
             text = label,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onTertiaryContainer
+            color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
 }

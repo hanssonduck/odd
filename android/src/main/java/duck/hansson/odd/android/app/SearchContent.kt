@@ -51,19 +51,26 @@ fun SearchContent(
     modifier: Modifier = Modifier
 ) {
     AnimatedContent(
-        targetState = state.key,
+        targetState = state,
         modifier = modifier
             .fillMaxSize()
             .systemBarsPadding()
             .background(color = MaterialTheme.colorScheme.background),
-        label = "SearchContent"
+        label = "SearchContent",
+        contentKey = {
+            when (it) {
+                is AppState.Data -> it.results
+                is AppState.Empty -> true
+                is AppState.Waiting -> false
+            }
+        }
     ) {
         LazyColumn(
             contentPadding = PaddingValues(all = 16.dp),
             verticalArrangement = Arrangement.spacedBy(space = 16.dp)
         ) {
-            when {
-                it == "data" && state is AppState.Data -> items(state.results) { result ->
+            when (it) {
+                is AppState.Data -> items(it.results) { result ->
                     ResultItem(
                         contactActions = viewModel.contactActions,
                         animal = result.animal,
@@ -71,13 +78,13 @@ fun SearchContent(
                     )
                 }
 
-                it == "empty" && state is AppState.Empty -> item {
+                is AppState.Empty -> item {
                     ErrorMessage(
                         text = "Inga katter hittades för denna sökning. Prova ett annat chipnummer eller tatuering."
                     )
                 }
 
-                it == "waiting" && state is AppState.Waiting -> item {
+                is AppState.Waiting -> item {
                     ErrorMessage(text = "Ingen sökning har gjorts.",)
                 }
             }
@@ -186,13 +193,13 @@ fun AnimalOverview(
             .fillMaxWidth()
             .padding(all = 16.dp),
         colors = CardDefaults.outlinedCardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         )
     ) {
         Text(
             text = overview,
             modifier = Modifier.padding(all = 16.dp),
-            color = MaterialTheme.colorScheme.onTertiaryContainer
+            color = MaterialTheme.colorScheme.onSecondaryContainer
         )
     }
 }
@@ -222,24 +229,27 @@ private fun ContactOwnerButton(
                     bottom = 16.dp,
                     start = 16.dp
                 ),
-            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
             border = CardDefaults.outlinedCardBorder(),
             contentPadding = PaddingValues(all = 16.dp)
         ) {
             Text(
                 text = "Kontakta ${owner.name.first}",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onTertiaryContainer
+                color = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
     }
 }
 
 @Composable
-fun ErrorMessage(text: String) {
+fun ErrorMessage(
+    text: String,
+    modifier: Modifier = Modifier
+) {
     Text(
         text = text,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Center
     )
 }

@@ -71,10 +71,13 @@ dependencies {
     implementation(libs.ui)
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
+    implementation(libs.animation)
+    implementation(libs.material.icons)
     implementation(libs.material.you)
 
     implementation(libs.destinations.core)
     ksp(libs.destinations.ksp)
+    implementation(libs.browser)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
