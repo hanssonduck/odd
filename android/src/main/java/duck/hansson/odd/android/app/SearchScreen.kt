@@ -122,12 +122,12 @@ private fun ActionButton(
             if (it) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null
+                    contentDescription = "Back"
                 )
             } else {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = null
+                    contentDescription = "Search"
                 )
             }
         }
