@@ -22,9 +22,13 @@ struct ContentView: View {
                         .multilineTextAlignment(.center)
 
                 default:
-                    Text("Ingen sökning har gjorts.")
-                        .frame(maxWidth: UIScreen.main.bounds.width, alignment: .center)
-                        .padding()
+                    GoodInfo()
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(RoundedRectangle(cornerRadius: 10)
+                            .padding(.bottom)
+                            .foregroundColor(Color(.systemBackground))
+                        )
                 }
             }
             .navigationTitle("Kattregister")
@@ -41,6 +45,37 @@ struct ContentView: View {
                 viewModel.updateQuery(query: query)
             }
         }
+    }
+}
+
+private struct GoodInfo: View {
+    @Environment(\.openURL) var openURL
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Sök och leta efter katter inom Jordbruksverkets nya kattregister.")
+            Text("Endast katter från Jordbruksverkets nya kattregister visas.")
+                .padding(.bottom)
+        }
+        .padding()
+
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Har du hittat en bortsprungen katt men är osäker på vad som bör göras?")
+            Button {
+                if let url = URL(string: "https://polisen.se/tjanster-tillstand/hittegods/upphittat-djur") {
+                    openURL(url)
+                }
+            } label: {
+                HStack {
+                    Text("Information från polisen")
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                }
+            }
+            .padding(.bottom)
+            .buttonStyle(.borderless)
+        }
+        .padding()
     }
 }
 

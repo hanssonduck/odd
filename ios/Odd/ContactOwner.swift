@@ -16,20 +16,20 @@ struct ContactOwner: View {
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading) {
             VStack(alignment: .leading) {
                 Text(owner.fullName)
                     .font(.title)
                 Text("Ägare")
-                    .font(.footnote)
             }
+            .padding()
 
             if let location = owner.location {
                 VStack(alignment: .leading) {
                     Text("\(location.address)")
                     Text("\(location.zip) \(location.city)")
                 }
-                .padding(.vertical)
+                .padding([.horizontal, .bottom])
             }
 
             if let phoneNumber = owner.phoneNumber {
@@ -42,6 +42,7 @@ struct ContactOwner: View {
                         .padding(.vertical, 5)
                         .font(.title3)
                 }
+                .padding(.horizontal)
                 .buttonStyle(.bordered)
             }
 
@@ -55,6 +56,7 @@ struct ContactOwner: View {
                         .padding(.vertical, 5)
                         .font(.title3)
                 }
+                .padding(.horizontal)
                 .buttonStyle(.bordered)
             }
 
@@ -65,8 +67,7 @@ struct ContactOwner: View {
                     .multilineTextAlignment(.center)
             }
         }
-        .padding(.vertical, 50)
-        .padding(.horizontal)
+        .padding(.vertical)
         .overlay {
             GeometryReader {
                 Color.clear.preference(key: InnerHeightPreferenceKey.self, value: $0.size.height)

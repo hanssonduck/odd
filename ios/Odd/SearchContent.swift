@@ -7,13 +7,12 @@ struct SearchContent: View {
     var body: some View {
         ForEach(state.results, id: \.animal.id) { result in
             ResultItem(animal: result.animal, owner: result.owner)
-                .listRowInsets(.init(top: 0, leading: 0, bottom: 20, trailing: 0))
+                .listRowInsets(EdgeInsets())
                 .listRowSeparator(.hidden)
                 .listRowBackground(
                     RoundedRectangle(cornerRadius: 10)
-                        .background(Color(.clear))
-                        .foregroundColor(Color(.systemBackground))
                         .padding(.bottom)
+                        .foregroundColor(Color(.systemBackground))
                 )
         }
     }
@@ -26,12 +25,13 @@ struct ResultItem: View {
     @State private var showContactSheet = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading) {
                 Text(animal.name)
                     .font(.title)
                 Text(animal.gender)
             }
+            .padding()
 
             if let chip = animal.chip {
                 VStack(alignment: .leading) {
@@ -39,6 +39,7 @@ struct ResultItem: View {
                     Text("Chipnummer")
                         .font(.footnote)
                 }
+                .padding(.horizontal)
             }
 
             if let tattoo = animal.tattoo {
@@ -47,6 +48,7 @@ struct ResultItem: View {
                     Text("Tatuering")
                         .font(.footnote)
                 }
+                .padding(.horizontal)
             }
 
             VStack(alignment: .leading) {
@@ -54,19 +56,24 @@ struct ResultItem: View {
                 Text(animal.breed)
                     .font(.footnote)
             }
+            .padding()
 
             VStack(alignment: .leading) {
                 Text("\(animal.age) år gammal")
                 Text("Född \(animal.birthday.toNSDate().formatted(.dateTime.day().month(.wide).year()))")
                     .font(.footnote)
             }
+            .padding(.horizontal)
 
             if let overview = animal.overview {
-                Text(overview)
-                    .padding()
-                    .frame(maxWidth: UIScreen.main.bounds.width, alignment: .leading)
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(10)
+                ZStack {
+                    Text(overview)
+                        .padding()
+                        .frame(maxWidth: UIScreen.main.bounds.width, alignment: .leading)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(10)
+                }
+                .padding([.horizontal, .top])
             }
 
             HStack {
@@ -76,11 +83,12 @@ struct ResultItem: View {
                     Text("Kontakta \(owner.name.first)")
                         .frame(maxWidth: UIScreen.main.bounds.width)
                 }
+                .padding()
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
             }
         }
-        .padding()
+        .padding(.bottom)
         .sheet(isPresented: $showContactSheet) {
             ContactOwner(owner: owner)
         }
